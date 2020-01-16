@@ -1,0 +1,14 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.color{
+  color: white;
+}
+.color:hover {
+  background-color: #000055;
+}
+.color:visited {
+  background-color: black;
+}
+
+

@@ -1,0 +1,13 @@
+mat-grid-tile {
+    background: lightblue;
+  }
+  .example-card {
+    width: 400px;
+    height:400px;
+  }
+  .width1{
+    width:400px;
+  }
+  th{
+    background-color:#696969;
+  }
