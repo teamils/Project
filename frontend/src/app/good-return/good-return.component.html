@@ -1,65 +1,64 @@
 <mat-toolbar>Goods Return</mat-toolbar><br>
 <p style="position:relative; left:158px">* Client :
-  <select class="width1">
+  <select class="width1"  [(ngModel)]="client">
     <option>STAEDTLER(GR)</option>
     <option>STAEDTLER(OLD)</option>
   </select>
   <font style="position:relative; left:250px">* GR Date :
-    <input type="date">
+    <input type="date" [(ngModel)]="GRDate">
   </font>
 </p>
 
 <p style="position:relative; left:159px">* GR ID :
-  <input  class="input is-small width1" type="text" placeholder="Text input">
-  <font style="position:relative; left:198px">* Document Date :
-    <input type="date">
+  <input  class="input is-small width1" type="text" placeholder="Text input" [(ngModel)]="grID">
+  <font style="position:relative; left:198px" >* Document Date :
+    <input type="date"  [(ngModel)]="DocDate">
   </font>
 </p>
 
 <p style="position:relative; left:100px">* Document No :
-  <input  class="input is-small width1" type="text" placeholder="Text input">
-  <font style="position:relative; left:270px"> Status :
-
-  </font>
+  <input  class="input is-small width1" type="text" placeholder="Text input" [(ngModel)]="DocNo">
+  <font style="position:relative; left:270px"> Status : {{Status}}</font>
 </p>
 
 <p style="position:relative; left:123px">Received By :
-  <select class="width1">
+  <select class="width1" [(ngModel)]="ReceivedBy">
     <option>AOI-RATDA LAPSATIAN</option>
     <option>With options</option>
   </select>
 </p>
 
 <p style="position:relative; left:24px">Customer Name / Remark :
-  <input style="width:600px" class="input is-small" type="text" placeholder="Text input">
+  <input style="width:600px" class="input is-small" type="text" placeholder="Text input" [(ngModel)]="Remark">
 </p>
 
-<p style="position:relative; left:167px">Select :
-  <label class="radio">
-    <input type="radio" name="answer1">Specify Invoice Number
-  </label>
-  <label class="radio">
-    <input type="radio" name="answer1" checked>Not Specify Invoice Number
-  </label>
-</p>
 
-<p style="position:relative; left:167px">Select :
+<div class="control" style="position:relative; left:167px">Select :
   <label class="radio">
-    <input type="radio" name="answer2">Eull Return
+    <input type="radio" name="answer" value="Specify Invoice Number"  [(ngModel)]="select1">Specify Invoice Number
   </label>
   <label class="radio">
-    <input type="radio" name="answer2" checked>Partial Return
+    <input type="radio" name="answer" value="Not Specify Invoice Number"  [(ngModel)]="select1">Not Specify Invoice Number
   </label>
-</p>
+</div>
 
-<p style="position:relative; left:140px">GR Status :
+<div class="control" style="position:relative; left:167px">Select :
   <label class="radio">
-    <input type="radio" name="answer3">On Return
+    <input type="radio" name="answer2" value="Eull Return"  [(ngModel)]="select2">Eull Return
   </label>
   <label class="radio">
-    <input type="radio" name="answer3" checked>During the inspection and Put Away
+    <input type="radio" name="answer2" value="Partial Return"  [(ngModel)]="select2">Partial Return
   </label>
-</p>
+</div>
+
+<div class="control" style="position:relative; left:140px">GR Status :
+  <label class="radio">
+    <input type="radio" name="answer3" value="On Return"  [(ngModel)]="select3">On Return
+  </label>
+  <label class="radio">
+    <input type="radio" name="answer3" value="During the inspection and Put Away"  [(ngModel)]="select3">During the inspection and Put Away
+  </label>
+</div>
 <br>
 <p style="position:relative; left:24px">--> Not Specify Invoice Number :</p>
 
@@ -74,24 +73,27 @@
       <th>G-Qty(Pcs)</th>
       <th>D-Qty(SU)</th>
       <th>D-Qty(Pcs)</th>
+      <th></th>
     </tr>
-    <tr>
-      <td>test1</td>
-      <td>test2</td>
-      <td>test3</td>
-      <td>test4</td>
-      <td>test5</td>
-      <td>test6</td>
-      <td>test7</td>
-      <td>test8</td>
+    <tr *ngFor="let i of Invoice ; let i2 = index;" >
+
+      <td align="lift">{{i.a0}}</td>
+      <td align="lift">{{i.a1}}</td>
+      <td align="lift">{{i.a2}}</td>
+      <td align="right">{{i.a3}}</td>
+      <td align="right">{{i.G_qtySU}}</td>
+      <td align="right">{{i.G_qtyPcs}}</td>
+      <td align="right">{{i.D_qtySU}}</td>
+      <td align="right">{{i.D_qtyPcs}}</td>
+      <td align="right"><button class="button is-text" (click)="Delete(i2)">Delete</button></td>
     </tr>
   </table>
 </div>
-<p style="position:relative; left:123px">Product :
-  <select class="width1">
-    <option>0G364B0 --> V364 SC4TR</option>
+<div class="select;" style="position:relative; left:220px;">Product :
+  <select [(ngModel)]="productSelect">
+    <option *ngFor="let i of Product">{{i}}</option>
   </select>
-</p>
+</div>
 <div class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
   <table class="table" align="center">
     <tr >
@@ -108,15 +110,19 @@
       <th align="center">PCS</th>
     </tr>
     <tr>
-      <td>test1</td>
-      <td>test2</td>
-      <td>test3</td>
-      <td>test4</td>
-      <td>test5</td>
-      <td>test6</td>
+      <td>PCS</td>
+      <td align="center">1</td>
+      <td><input class="input is-small" type="number" class="width" [(ngModel)]="G_qtySU"></td>
+      <td><input class="input is-small" type="number" class="width"[(ngModel)]="G_qtyPcs"></td>
+      <td><input class="input is-small" type="number" class="width" [(ngModel)]="D_qtySU"></td>
+      <td><input class="input is-small" type="number" class="width"[(ngModel)]="D_qtyPcs"></td>
     </tr>
   </table>
 </div>
 <div align="center">
-  <button class="button is-dark">Submit</button> &nbsp;<button class="button is-dark">Cancel</button>
+  <button class="button is-primary" (click)="Submit();">Submit</button>
+  &nbsp;<button class="button is-dark" (click)="Cancle()">Cancel</button>
+  &nbsp;<button class="button is-danger">Confirm</button>
+  &nbsp;<button class="button is-light">Print</button>
 </div>
+<br><br>

@@ -16,6 +16,7 @@ import { DataTransferComponent } from './data-transfer/data-transfer.component';
 import { TransferOutAdviseComponent } from './transfer-out-advise/transfer-out-advise.component';
 import { TransferInComponent } from './transfer-in/transfer-in.component';
 import { InboundComponent } from './inbound/inbound.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { InboundComponent } from './inbound/inbound.component';
     MatGridListModule,
     MatCardModule,
     MatSelectModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
