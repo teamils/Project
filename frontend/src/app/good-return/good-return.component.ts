@@ -29,7 +29,11 @@ export class GoodReturnComponent implements OnInit {
   idnum : number = 0;
   Invoice : any[] = [];
 
-  constructor() { }
+  constructor() {
+
+      this.Invoice = JSON.parse(localStorage.getItem('invoice'));
+      console.log( this.Invoice);
+  }
 
   ngOnInit() {
       this.client = "STAEDTLER(GR)";
@@ -65,7 +69,22 @@ export class GoodReturnComponent implements OnInit {
         select3:this.select3,
         Invoice:this.Invoice,
       });
-      console.log(this.Invoice);
+
+      const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+      //console.log(JSON.stringify(this.Invoice, getCircularReplacer()));
+       localStorage.setItem('invoice', JSON.stringify(this.Invoice, getCircularReplacer()));
+
   }
 
   Cancle(){
@@ -77,5 +96,21 @@ export class GoodReturnComponent implements OnInit {
 
   Delete(event){
      this.Invoice.splice(event,1);
+
+
+            const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
+      localStorage.setItem('invoice', JSON.stringify(this.Invoice, getCircularReplacer()));
   }
 }
