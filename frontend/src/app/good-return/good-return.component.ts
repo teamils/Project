@@ -28,12 +28,33 @@ export class GoodReturnComponent implements OnInit {
   D_qtyPcs;
   idnum : number = 0;
   Invoice : any[] = [];
-
+  showInvoice : any[] = [];
+in : any;
   constructor() {
 
       this.Invoice = JSON.parse(localStorage.getItem('invoice'));
       console.log( this.Invoice);
+
+      this.in = setInterval(() => {
+            let grId2 = this.grID;
+            this.showInvoice = [] ;
+            for(let i = 0 ; i <  this.Invoice.length ; i++){
+                for(let j = 0 ; j <  this.Invoice[i].length ; j++){
+                    if(this.Invoice[i][j].grID == grId2){
+                        this.showInvoice = this.Invoice[i];
+                    }
+                }
+            }
+       // console.log(this.showInvoice);
+       // console.log(this.Invoice);
+      }, 500); //interval
   }
+
+ngOnDestroy(){
+  if(this.in){
+    clearInterval(this.in);
+  }
+}
 
   ngOnInit() {
       this.client = "STAEDTLER(GR)";
@@ -45,7 +66,10 @@ export class GoodReturnComponent implements OnInit {
   }
   Submit(){
     var splitted = this.productSelect.split(" --> ");
-     this.Invoice.push({
+
+      if(this.Invoice.length == 0){
+          this.Invoice.push(new Array);
+          this.Invoice[0].push({
         a0:splitted[0],
         a1 : splitted[1],
         a2:'PCS',
@@ -69,6 +93,72 @@ export class GoodReturnComponent implements OnInit {
         select3:this.select3,
         Invoice:this.Invoice,
       });
+      }else{
+          let checkSame  = 0;
+          let index = 0 ;
+          for(let i = 0 ; i < this.Invoice.length ; i++){
+              for(let j = 0 ; j < this.Invoice[i].length ; j++){
+                  if(this.Invoice[i][j].grID == this.grID){
+                      checkSame = 1 ;
+                      index = i ;
+                  }
+              }
+          }
+          if(checkSame == 1){
+                this.Invoice[index].push({
+                 a0:splitted[0],
+               a1 : splitted[1],
+                a2:'PCS',
+                a3:'1',
+                G_qtySU:this.G_qtySU,
+                G_qtyPcs:this.G_qtyPcs,
+                D_qtySU:this.D_qtySU,
+                D_qtyPcs:this.D_qtyPcs,
+
+              client:this.client,
+              GRDate:this.GRDate,
+              DocDate:this.DocDate,
+              Product:this.Product,
+              grID:this.grID,
+               DocNo:this.DocNo,
+               Status:this.Status,
+               ReceivedBy:this.ReceivedBy,
+               Remark:this.Remark,
+              select1:this.select1,
+               select2:this.select2,
+                select3:this.select3,
+                  Invoice:this.Invoice,
+                 });
+            }else{
+                    this.Invoice.push(new Array);
+                this.Invoice[ this.Invoice.length - 1].push({
+                 a0:splitted[0],
+               a1 : splitted[1],
+                a2:'PCS',
+                a3:'1',
+                G_qtySU:this.G_qtySU,
+                G_qtyPcs:this.G_qtyPcs,
+                D_qtySU:this.D_qtySU,
+                D_qtyPcs:this.D_qtyPcs,
+
+              client:this.client,
+              GRDate:this.GRDate,
+              DocDate:this.DocDate,
+              Product:this.Product,
+              grID:this.grID,
+               DocNo:this.DocNo,
+               Status:this.Status,
+               ReceivedBy:this.ReceivedBy,
+               Remark:this.Remark,
+              select1:this.select1,
+               select2:this.select2,
+                select3:this.select3,
+                  Invoice:this.Invoice,
+                 });
+
+            }
+      }
+
 
       const getCircularReplacer = () => {
   const seen = new WeakSet();
@@ -82,7 +172,8 @@ export class GoodReturnComponent implements OnInit {
     return value;
   };
 };
-      //console.log(JSON.stringify(this.Invoice, getCircularReplacer()));
+
+      console.log(this.Invoice);
        localStorage.setItem('invoice', JSON.stringify(this.Invoice, getCircularReplacer()));
 
   }
